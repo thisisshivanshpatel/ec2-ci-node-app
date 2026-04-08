@@ -11,14 +11,15 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/Checkout@v4
+        uses: actions/checkout@v4
 
       - name: Deploy via SSH
-      - uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
-          scripts: cd /home/ubuntu/ec2-ci-node-app
+          script: |
+            cd /home/ubuntu/ec2-ci-node-app
             git pull
             docker compose up -d --build
